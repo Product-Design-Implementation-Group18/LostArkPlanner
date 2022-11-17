@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import customtkinter
 
 class EngravingCalc(customtkinter.CTkFrame):
@@ -39,18 +40,69 @@ class EngravingCalc(customtkinter.CTkFrame):
 
         self.label_empty = customtkinter.CTkLabel(master=self.frame_content, text = "")
         self.label_empty.grid(row= 1, column = 0, pady=5, padx=10)
-        #   
-        self.lst = ["Adrenaline","All-Out Attack","Ambush Master","Awakening","Barricade","Broken Bone","Contender","Crisis Evasion","Crushing Fist","Cursed Doll","Disrespect","Divine Protection",
+
+        # All engravings in a list   
+        self.lst = ["--Combat Engraving--","Adrenaline","All-Out Attack","Ambush Master","Awakening","Barricade","Broken Bone","Contender","Crisis Evasion","Crushing Fist","Cursed Doll","Disrespect","Divine Protection",
                     "Drops of Ether","Emergency Rescue","Enhanced Shield","Ether Predator","Expert","Explosive Expert","Fortitude","Grudge","Heavy Armor","Hit Master","Keen Blunt Weapon","Lightning Fury",
                     "Magick Stream","Mass Increase","Master Brawler","Master of Escape","Master's Tenacity","Max MP Increase","Necromacy","Precise Dagger","Preemptive Strike","Propulsion","Raid Captain",
-                    "Shield Piercing","Sight Focus","Spirit Absorption","Stabilized Status","Strong Will","Super Charge","Vital Point Hit"]
+                    "Shield Piercing","Sight Focus","Spirit Absorption","Stabilized Status","Strong Will","Super Charge","Vital Point Hit", "--Class Engravings--", "Mayhem","Berserker's Technique","Enhanced Weapon",
+                    "Pistoleer","Esoteric Skill Enhancement","First Intetion","Ultimate Skill: Taijutsu","Shock Training","Barrage","Firepower Enhancement","True Courage","Desperate Salvation","Reflux", "Igniter",
+                    "Esoteric Flurry","Deathblow","Time To Hunt","Peacemaker","Blessed Aura","Judgement","Demonic Impulse","Perfect Suppression","Surge","Remaining Energy","Death Strike", "Loyal Companion",
+                    "Energy Overflow","Robust Spirit","Lone Knight","Combat Readiness"]
+
+        self.lst_negative = ["Attack Power Reduction", "Attack Speed Reduction", "Defence reduction", "Movementspeed reduction"]
 
         # Fill top with engraving comboboxes
-        dd_nr = -1
-        dds = []
+        dropd_nr = -1
+        dropds = []
         for x in range(1, 7):
-            dd_nr += 1
+            dropd_nr += 1
 
-            dds.append(customtkinter.CTkComboBox(master=self.frame_content, values = self.lst))
-            dds[dd_nr].grid(row=1, column = x, padx=5, pady=5)
+            dropds.append(ttk.Combobox(master=self.frame_content, values = self.lst))
+            dropds[dropd_nr].grid(row=1, column = x, padx=5, pady=5)
 
+
+        dropdneg_nr = -1
+        dropdneg = []
+        for x in range(2, 8):
+            dropdneg_nr += 1
+
+            dropdneg.append(ttk.Combobox(master=self.frame_content, values = self.lst_negative))
+            dropdneg[dropdneg_nr].grid(row=x, column = 9)
+
+
+        self.label_neg = customtkinter.CTkLabel(master=self.frame_content, text = "Negative Engravings")
+        self.label_neg.grid(row=1, column = 8, pady = 5, padx = 5)
+
+
+        # All items listed on the left 
+        self.label_amulet = customtkinter.CTkLabel(master=self.frame_content, text = "Amulet")
+        self.label_amulet.grid(row= 2, column = 0, pady=5, padx=5)
+
+        self.label_earring1 = customtkinter.CTkLabel(master=self.frame_content, text = "Earring 1")
+        self.label_earring1.grid(row= 3, column = 0, pady=5, padx=5)
+
+        self.label_earring2 = customtkinter.CTkLabel(master=self.frame_content, text = "Earring 2")
+        self.label_earring2.grid(row= 4, column = 0, pady=5, padx=5)
+
+        self.label_ring1 = customtkinter.CTkLabel(master=self.frame_content, text = "Ring 1")
+        self.label_ring1.grid(row= 5, column = 0, pady=5, padx=5)
+
+        self.label_ring2 = customtkinter.CTkLabel(master=self.frame_content, text = "Ring 2")
+        self.label_ring2.grid(row= 6, column = 0, pady=5, padx=5)
+
+        self.label_stone = customtkinter.CTkLabel(master=self.frame_content, text = "Ability Stone")
+        self.label_stone.grid(row= 7, column = 0, pady=5, padx=5)
+
+        self.label_book1 = customtkinter.CTkLabel(master=self.frame_content, text = "Engraving Book 1")
+        self.label_book1.grid(row= 8, column = 0, pady=5, padx=5)
+
+        self.label_book2 = customtkinter.CTkLabel(master=self.frame_content, text = "Engraving Book 2")
+        self.label_book2.grid(row= 9, column = 0, pady=5, padx=5)
+
+
+        #Test trash
+        self.label_trash = customtkinter.CTkLabel(master=self.frame_content, text = "3")
+        self.label_trash.grid(row=2, column = 8, pady=5, padx=5)
+        self.label_trash2 = customtkinter.CTkLabel(master=self.frame_content, text = "1")
+        self.label_trash2.grid(row=3, column = 8, pady=5, padx=5)
