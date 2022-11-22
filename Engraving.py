@@ -38,25 +38,21 @@ class EngravingCalc(customtkinter.CTkFrame):
         self.button_gemcutter.configure(state="disabled")
 
 
-
-        # Cleaning up padding x and y update needed  !!!!
-
+        # Top bar, figure out better way to put it in pages prob
         self.button_engragving = customtkinter.CTkButton(master=self.frame_content,
-                                                        text="Engraving",
+                                                        text="Engraving", 
                                                         width= 120, height= 32, corner_radius = 8,
-                                                        text_font=("arial", 15))
+                                                        text_font=("arial", 15), 
+                                                        command=lambda: controller.show_frame("EngravingCalc"))
         self.button_engragving.grid(row=1, column=1, pady=10, padx=10) 
         self.button_tripod = customtkinter.CTkButton(master=self.frame_content,
-                                                    text="Tripod",
-                                                    width= 120, height= 32,
-                                                    corner_radius = 8,
+                                                    text="Tripod", width= 120, height= 32, corner_radius = 8,
                                                     text_font=("arial", 15))
-        self.button_tripod.grid(row=1, column=2, pady=10, padx=10)
+        self.button_tripod.grid(row=1, column=3, pady=10, padx=10)
         self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
-                                                        text="Tier Set",
-                                                        width= 120, height= 32, corner_radius = 8,
-                                                        text_font=("arial", 15))
-        self.button_tier_set.grid(row=1, column=3, pady=10, padx=10) 
+                                                        text="Tier Set", width= 120, height= 32, corner_radius = 8,
+                                                        text_font=("arial", 15), command=lambda: controller.show_frame("SetPlanner"))
+        self.button_tier_set.grid(row=1, column=5, pady=10, padx=10) 
 
 
         # All engravings in a list   
@@ -200,7 +196,7 @@ class EngravingCalc(customtkinter.CTkFrame):
             totals[total_nr].grid(row= 11, column = x) 
 
         #Calculate sum of spesified boxes to spesific label
-        def test():
+        def Calculate_Eng():
             total = sum(int(e.get()) for e in (eglvls[0], eglvls[6],eglvls[12],eglvls[18],eglvls[24],eglvls[30],eglvls[36],eglvls[42]))
             totals[0].configure(text= total)
 
@@ -220,9 +216,5 @@ class EngravingCalc(customtkinter.CTkFrame):
             totals[5].configure(text = total5)
 
         #Calculate using the button
-        self.testbut = customtkinter.CTkButton(master=self.frame_content, command = lambda: test(), text="Calculate" )
+        self.testbut = customtkinter.CTkButton(master=self.frame_content, command = lambda: Calculate_Eng(), text="Calculate" )
         self.testbut.grid(row= 12, column = 3)
-
-        #Copy paste button command just swap showframe to page u want to enter
-        self.testbut2 = customtkinter.CTkButton(master=self.frame_content, command=lambda: controller.show_frame("StartPage"))
-        self.testbut2.grid(row= 12, column = 5)

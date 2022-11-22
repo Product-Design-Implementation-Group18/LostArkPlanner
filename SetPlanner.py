@@ -37,7 +37,27 @@ class SetPlanner(customtkinter.CTkFrame):
         #  #  Made it disabled until we start / know we have enough time # #
         self.button_gemcutter.configure(state="disabled")
 
-        
+        # Top bar, figure out better way to put it in pages prob
+        self.button_engragving = customtkinter.CTkButton(master=self.frame_content, 
+                                                        text="Engraving",
+                                                        width= 120, height= 32, corner_radius = 8,
+                                                        text_font=("arial", 15),
+                                                        command=lambda: controller.show_frame("EngravingCalc"))
+        self.button_engragving.grid(row=1, column=1, pady=5, padx=10) 
+        self.button_tripod = customtkinter.CTkButton(master=self.frame_content,
+                                                    text="Tripod",
+                                                    width= 120, height= 32, corner_radius = 8,
+                                                    text_font=("arial", 15))
+        self.button_tripod.grid(row=1, column=2, pady=5, padx=10)
+        self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
+                                                        text="Tier Set", 
+                                                        width= 120, height= 32, corner_radius = 8,
+                                                        text_font=("arial", 15), 
+                                                        command=lambda: controller.show_frame("SetPlanner"))
+        self.button_tier_set.grid(row=1, column=3, pady=5, padx=10) 
+
+
+        # Different sets from the game
         self.sets = ["Selection", "Preordained Diligence", "Harsh Oath", "Demon Beast Strength", "Covetous Whisper",
                      "Poem of Salvation", "Dominion Fang", "Betrayal Instinct", "Swamp of Yearning", "Destructive Grasp",
                      "Charming Instinct", "Earth's Entropy", "Nightmare Flower", "Shrieking Hallucination"]
