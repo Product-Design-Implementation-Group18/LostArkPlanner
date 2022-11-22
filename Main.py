@@ -17,7 +17,7 @@ class App(tk.Tk):
 
         # Setting size and name of the app
         self.title("Lost Ark Planner")
-        self.geometry('1800x800')
+        self.geometry('1800x800+100+100')
 
         # Container to stack frames ontop of each other
         container = customtkinter.CTkFrame(self)
