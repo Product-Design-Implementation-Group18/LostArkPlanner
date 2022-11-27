@@ -42,6 +42,78 @@ class SetPlanner(customtkinter.CTkFrame):
                      "Poem of Salvation", "Dominion Fang", "Betrayal Instinct", "Swamp of Yearning", "Destructive Grasp",
                      "Charming Instinct", "Earth's Entropy", "Nightmare Flower", "Shrieking Hallucination"]
 
+        self.set_bonuses = [
+                            (
+                              "2 piece" + '\n' + "Selection 2p bonus",
+                              "5 piece" + '\n' + "Selection 5p bonus",
+                              ""
+                            ),
+                            (
+                              "2 piece" + '\n' + "diligence 2p",
+                              "5 piece" + '\n' + "diligence 5p",
+                              ""
+                            ),
+                            (
+                              "2 piece" + '\n' + "harsh oath 2p",
+                              "5 piece" + '\n' + "harsh oath 5p",
+                              ""
+                            ),
+                            (
+                              "2 piece" + '\n' + "demon beast 2p",
+                              "4 piece" + '\n' + "demon beast 4p",
+                              "6 piece" + '\n' + "demon beast 6p"
+                            ),
+                            (
+                              "2 piece" + '\n' + "covetous 2p",
+                              "4 piece" + '\n' + "covetous 4p",
+                              "6 piece" + '\n' + "covetous 6p"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            ),
+                            (
+                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
+                              "4 piece" + '\n' + "Crit rate +17%",
+                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
+                            )]
+
         #Create a treeview for displaying all sets
         self.set_header = ttk.Treeview(self.frame_content, height=20, show = 'tree', selectmode='browse', style='SetPlanner.Treeview')
         self.set_header.heading('#0')
@@ -50,20 +122,24 @@ class SetPlanner(customtkinter.CTkFrame):
 
         #Populate treeview with sets and set parts as children
         for index, set in enumerate(self.sets):
-          self.set_header.insert('', 'end', text = set + ' Gear', iid = index, open=False, tags=('set_main', 'set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Weapon', tags=('set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Headpiece', tags=('set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Chestpiece', tags=('set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Pants', tags=('set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Gloves', tags=('set_item'))
-          self.set_header.insert(parent = index, index='end', text= set + ' Pauldrons', tags=('set_item'))
+          self.set_header.insert('', 'end', text = set + ' Gear', iid = index, open=False, tags=('set_main'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Weapon', iid = str(index) +'A', tags=('set_item'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Headpiece', iid = str(index) +'B', tags=('set_item'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Chestpiece', iid = str(index) +'C', tags=('set_item'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Pants', iid = str(index) +'D', tags=('set_item'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Gloves', iid = str(index) +'E', tags=('set_item'))
+          self.set_header.insert(parent = index, index='end', text= set + ' Pauldrons', iid = str(index) +'F', tags=('set_item'))
 
         #Styling to make treeview look good
         self.style = ttk.Style()
         self.style.theme_use("default")
         self.style.configure('SetPlanner.Treeview', rowheight=30, borderwidth=0, fieldbackground = '#292929')
-        self.set_header.tag_configure('set_main', font=('arial', 15))
+        self.set_header.tag_configure('set_main', font=('arial', 15), background='#292929', foreground='white')
         self.set_header.tag_configure('set_item', background='#292929', foreground='white')
+
+        #Add bindings for functions to tree items
+        self.set_header.tag_bind('set_main', '<ButtonRelease>', self.switch_set_info)
+        self.set_header.tag_bind('set_item', '<Double-Button>', self.switch_equipped)
 
         #+++++++++++++++ SET INFO COLUMN ++++++++++++++++++
         self.set_info_name = customtkinter.CTkLabel(master = self.frame_content,
@@ -171,5 +247,38 @@ class SetPlanner(customtkinter.CTkFrame):
                                                text_font = ('arial', 13),                                               
                                                anchor = 'w')
         self.required_wings.grid(row = 13, column = 3, sticky = "nsew")
+
+    
+    #Changes displayed set info
+    def switch_set_info(self, event):
+        print(self.sets[int(self.set_header.focus())])
+        print(self.set_header.focus())
+        self.set_info_index = int(self.set_header.focus())
+        self.set_info_name.configure(text = self.sets[self.set_info_index])
+        self.set_info_2p.configure(text = self.set_bonuses[self.set_info_index][0])
+        self.set_info_4p.configure(text = self.set_bonuses[self.set_info_index][1])
+        self.set_info_6p.configure(text = self.set_bonuses[self.set_info_index][2])
+
+
+
+    #Changes chosen equipped set piece when function is called(when a set piece is doubleclicked)
+    def switch_equipped(self, event):
+        self.len = len(self.set_header.focus())-1
+        self.set_index = self.set_header.focus()[0:self.len]
+        self.item_slot = self.set_header.focus()[self.len:]
+        if self.item_slot == 'A':
+          self.equipped_weapon.configure(text = self.sets[int(self.set_index)] + ' Weapon')
+        elif self.item_slot == 'B':
+          self.equipped_headpiece.configure(text = self.sets[int(self.set_index)] + ' Headpiece')
+        elif self.item_slot == 'C':
+          self.equipped_chestpiece.configure(text = self.sets[int(self.set_index)] + ' Chestpiece')
+        elif self.item_slot == 'D':
+          self.equipped_pants.configure(text = self.sets[int(self.set_index)] + ' Pants')
+        elif self.item_slot == 'E':
+          self.equipped_gloves.configure(text = self.sets[int(self.set_index)] + ' Gloves')
+        elif self.item_slot == 'F':
+          self.equipped_pauldrons.configure(text = self.sets[int(self.set_index)] + ' Pauldrons')
+
+        
         
 
