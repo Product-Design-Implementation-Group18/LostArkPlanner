@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter
+import json
 
 class SetPlanner(customtkinter.CTkFrame):
 
@@ -37,82 +38,22 @@ class SetPlanner(customtkinter.CTkFrame):
         #  #  Made it disabled until we start / know we have enough time # #
         self.button_gemcutter.configure(state="disabled")
 
-        
-        self.sets = ["Selection", "Preordained Diligence", "Harsh Oath", "Demon Beast Strength", "Covetous Whisper",
-                     "Poem of Salvation", "Dominion Fang", "Betrayal Instinct", "Swamp of Yearning", "Destructive Grasp",
-                     "Charming Instinct", "Earth's Entropy", "Nightmare Flower", "Shrieking Hallucination"]
 
-        self.set_bonuses = [
-                            (
-                              "2 piece" + '\n' + "Selection 2p bonus",
-                              "5 piece" + '\n' + "Selection 5p bonus",
-                              ""
-                            ),
-                            (
-                              "2 piece" + '\n' + "diligence 2p",
-                              "5 piece" + '\n' + "diligence 5p",
-                              ""
-                            ),
-                            (
-                              "2 piece" + '\n' + "harsh oath 2p",
-                              "5 piece" + '\n' + "harsh oath 5p",
-                              ""
-                            ),
-                            (
-                              "2 piece" + '\n' + "demon beast 2p",
-                              "4 piece" + '\n' + "demon beast 4p",
-                              "6 piece" + '\n' + "demon beast 6p"
-                            ),
-                            (
-                              "2 piece" + '\n' + "covetous 2p",
-                              "4 piece" + '\n' + "covetous 4p",
-                              "6 piece" + '\n' + "covetous 6p"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            ),
-                            (
-                              "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                              "4 piece" + '\n' + "Crit rate +17%",
-                              "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%"
-                            )]
+        # Load set data from JSON file
+        self.open_sets = open('Sets.json')
+        self.set_data = json.load(self.open_sets)
+        # Make an indexable list from set names for functions
+        self.set_data_list = list(self.set_data['sets'])
+
+        # Dictionary for storing current equipped gear
+        self.items_equipped = {
+          "Weapon" : "Earth's Entropy",
+          "Headpiece" : "Earth's Entropy",
+          "Chestpiece" : "Earth's Entropy",
+          "Pants" : "Earth's Entropy",
+          "Gloves" : "Earth's Entropy",
+          "Pauldrons" : "Earth's Entropy"
+        }
 
         #Create a treeview for displaying all sets
         self.set_header = ttk.Treeview(self.frame_content, height=20, show = 'tree', selectmode='browse', style='SetPlanner.Treeview')
@@ -121,7 +62,7 @@ class SetPlanner(customtkinter.CTkFrame):
         self.set_header.grid(row = 0, column= 1, pady=50, padx=10, sticky = 'nesw', rowspan=20)
 
         #Populate treeview with sets and set parts as children
-        for index, set in enumerate(self.sets):
+        for index, set in enumerate(self.set_data['sets']):
           self.set_header.insert('', 'end', text = set + ' Gear', iid = index, open=False, tags=('set_main'))
           self.set_header.insert(parent = index, index='end', text= set + ' Weapon', iid = str(index) +'A', tags=('set_item'))
           self.set_header.insert(parent = index, index='end', text= set + ' Headpiece', iid = str(index) +'B', tags=('set_item'))
@@ -142,142 +83,254 @@ class SetPlanner(customtkinter.CTkFrame):
         self.set_header.tag_bind('set_item', '<Double-Button>', self.switch_equipped)
 
         #+++++++++++++++ SET INFO COLUMN ++++++++++++++++++
-        self.set_info_name = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "Earth's Entropy",
-                                               text_font = ('arial', 14),
+        self.set_info_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25)
+        self.set_info_frame.grid(row = 1, column = 2, sticky = "nsew", rowspan = 20)
+
+        self.set_info_name = customtkinter.CTkLabel(master = self.set_info_frame,
+                                               text = "Click on a set to display its bonuses here",
+                                               text_font = ('arial', 12),
                                                anchor = 'nw',
-                                               justify = 'left')
-        self.set_info_name.grid(row = 3, column = 2, sticky = "nsew", padx = 50)
+                                               justify = 'left',
+                                               wraplength = 300)
+        self.set_info_name.grid(row = 3, column = 1, sticky = "nsew", padx = 10, pady = 10)
 
-        self.set_info_2p = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "2 piece" + '\n' + "Crit damage +17%" + '\n' + "Back and Head attacks modify this to 55%",
-                                               text_font = ('arial', 14),
+        self.set_info_first_bonus = customtkinter.CTkLabel(master = self.set_info_frame,
+                                               text = "",
+                                               text_font = ('arial', 12),
                                                anchor = 'w',
-                                               justify = 'left')
-        self.set_info_2p.grid(row = 4, column = 2, sticky = "nsew", padx = 50)
+                                               justify = 'left',
+                                               wraplength = 300)
+        self.set_info_first_bonus.grid(row = 4, column = 1, sticky = "nsew", padx = 10, pady = 10)
 
-        self.set_info_4p = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "4 piece" + '\n' + "Crit rate +17%",
-                                               text_font = ('arial', 14),
+        self.set_info_second_bonus = customtkinter.CTkLabel(master = self.set_info_frame,
+                                               text = "",
+                                               text_font = ('arial', 12),
                                                anchor = 'w',
-                                               justify = 'left')
-        self.set_info_4p.grid(row = 5, column = 2, sticky = "nsew", padx = 50)
+                                               justify = 'left',
+                                               wraplength = 300)
+        self.set_info_second_bonus.grid(row = 5, column = 1, sticky = "nsew", padx = 10, pady = 10)
 
-        self.set_info_6p = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "6 piece" + '\n' + "Damage to foes +7%" + '\n' + "Back and Head attacks modify this to 21%",
-                                               text_font = ('arial', 14),
+        self.set_info_third_bonus = customtkinter.CTkLabel(master = self.set_info_frame,
+                                               text = "",
+                                               text_font = ('arial', 12),
                                                anchor = 'w',
-                                               justify = 'left')
-        self.set_info_6p.grid(row = 6, column = 2, sticky = "nsew", padx = 50)
+                                               justify = 'left',
+                                               wraplength = 300)
+        self.set_info_third_bonus.grid(row = 6, column = 1, sticky = "nsew", padx = 10, pady = 10)
 
         #Placeholder icon
         self.test_icon = tk.PhotoImage(file='./Icons/scrapper.png')
         self.test_icon_smaller = self.test_icon.subsample(5,5)
 
         #+++++++++++++++ EQUIPPED ITEMS COLUMN ++++++++++++++++++
-        self.equipped = customtkinter.CTkLabel(master = self.frame_content,
+        self.set_equip_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25)
+        self.set_equip_frame.grid(row = 1, column = 3, sticky = "nsew", rowspan = 20)
+
+        self.equipped = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = "Currently equipped:",
                                                text_font = ('arial', 15),
                                                anchor = 'w')
-        self.equipped.grid(row = 2, column = 3, sticky = "nsew")
+        self.equipped.grid(row = 2, column = 1, sticky = "nsew")
 
-        self.equipped_weapon = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_weapon = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Weapon",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',
                                                anchor = 'w')
-        self.equipped_weapon.grid(row = 3, column = 3, sticky = "nsew")
+        self.equipped_weapon.grid(row = 3, column = 1, sticky = "nsew")
 
-        self.equipped_headpiece = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_headpiece = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Headpiece",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_headpiece.grid(row = 4, column = 3, sticky = "nsew")
+        self.equipped_headpiece.grid(row = 4, column = 1, sticky = "nsew")
 
-        self.equipped_chestpiece = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_chestpiece = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Chestpiece",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_chestpiece.grid(row = 5, column = 3, sticky = "nsew")
+        self.equipped_chestpiece.grid(row = 5, column = 1, sticky = "nsew")
 
-        self.equipped_pants = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_pants = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Pants",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_pants.grid(row = 6, column = 3, sticky = "nsew")
+        self.equipped_pants.grid(row = 6, column = 1, sticky = "nsew")
 
-        self.equipped_gloves = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_gloves = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Gloves",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_gloves.grid(row = 7, column = 3, sticky = "nsew")
+        self.equipped_gloves.grid(row = 7, column = 1, sticky = "nsew")
 
-        self.equipped_pauldrons = customtkinter.CTkLabel(master = self.frame_content,
+        self.equipped_pauldrons = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = " Earth's Entropy Pauldrons",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_pauldrons.grid(row = 8, column = 3, sticky = "nsew")
+        self.equipped_pauldrons.grid(row = 8, column = 1, sticky = "nsew")
 
 
-        self.required_mats = customtkinter.CTkLabel(master = self.frame_content,
+        self.required_mats = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = "Required materials:",
                                                text_font = ('arial', 15),                                               
                                                anchor = 'w')
-        self.required_mats.grid(row = 11, column = 3, sticky = "nsew")
+        self.required_mats.grid(row = 11, column = 1, sticky = "nsew")
 
-        self.required_bones = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "Valtan Bones: 35",
+        self.required_bones = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
                                                text_font = ('arial', 13),                                               
                                                anchor = 'w')
-        self.required_bones.grid(row = 12, column = 3, sticky = "nsew")
+        self.required_bones.grid(row = 13, column = 1, sticky = "nsew")
 
-        self.required_wings = customtkinter.CTkLabel(master = self.frame_content,
-                                               text = "Vykas Wings: 40",
+        self.required_wings = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
                                                text_font = ('arial', 13),                                               
                                                anchor = 'w')
-        self.required_wings.grid(row = 13, column = 3, sticky = "nsew")
+        self.required_wings.grid(row = 12, column = 1, sticky = "nsew")
+
+        self.required_fangs = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
+                                               text_font = ('arial', 13),                                               
+                                               anchor = 'w')
+        self.required_fangs.grid(row = 14, column = 1, sticky = "nsew")
+
+        self.required_veins = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
+                                               text_font = ('arial', 13),                                               
+                                               anchor = 'w')
+        self.required_veins.grid(row = 15, column = 1, sticky = "nsew")
+
+        self.required_argos = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
+                                               text_font = ('arial', 13),                                               
+                                               anchor = 'w')
+        self.required_argos.grid(row = 16, column = 1, sticky = "nsew")
+
+        self.required_oreha = customtkinter.CTkLabel(master = self.set_equip_frame,
+                                               text = "",
+                                               text_font = ('arial', 13),                                               
+                                               anchor = 'w')
+        self.required_oreha.grid(row = 17, column = 1, sticky = "nsew")
+
+        #Count gear mats on load
+        self.count_gear_mats()
+
 
     
     #Changes displayed set info
     def switch_set_info(self, event):
-        print(self.sets[int(self.set_header.focus())])
-        print(self.set_header.focus())
+       # print(self.set_data['sets'][int(self.set_header.focus())])
+       # print(self.set_header.focus())
+       # print(self.set_data_list[int(self.set_header.focus())])
         self.set_info_index = int(self.set_header.focus())
-        self.set_info_name.configure(text = self.sets[self.set_info_index])
-        self.set_info_2p.configure(text = self.set_bonuses[self.set_info_index][0])
-        self.set_info_4p.configure(text = self.set_bonuses[self.set_info_index][1])
-        self.set_info_6p.configure(text = self.set_bonuses[self.set_info_index][2])
+        self.set_info_chosen_name = self.set_data_list[self.set_info_index]
+        self.set_info_name.configure(text = self.set_info_chosen_name)
+        self.set_info_first_bonus.configure(text = self.set_data['sets'][self.set_info_chosen_name]['first_bonus'])
+        self.set_info_second_bonus.configure(text = self.set_data['sets'][self.set_info_chosen_name]['second_bonus'])
+        self.set_info_third_bonus.configure(text = self.set_data['sets'][self.set_info_chosen_name]['third_bonus'])
 
 
-
-    #Changes chosen equipped set piece when function is called(when a set piece is doubleclicked)
+    #Changes chosen equipped set piece when function is called(when a set piece is double-clicked)
     def switch_equipped(self, event):
         self.len = len(self.set_header.focus())-1
         self.set_index = self.set_header.focus()[0:self.len]
         self.item_slot = self.set_header.focus()[self.len:]
+        self.set_name = self.set_data_list[int(self.set_index)]
         if self.item_slot == 'A':
-          self.equipped_weapon.configure(text = self.sets[int(self.set_index)] + ' Weapon')
+          self.equipped_weapon.configure(text = self.set_name + ' Weapon')
+          self.items_equipped["Weapon"] = self.set_name
         elif self.item_slot == 'B':
-          self.equipped_headpiece.configure(text = self.sets[int(self.set_index)] + ' Headpiece')
+          self.equipped_headpiece.configure(text = self.set_name + ' Headpiece')
+          self.items_equipped["Headpiece"] = self.set_name
         elif self.item_slot == 'C':
-          self.equipped_chestpiece.configure(text = self.sets[int(self.set_index)] + ' Chestpiece')
+          self.equipped_chestpiece.configure(text = self.set_name + ' Chestpiece')
+          self.items_equipped["Chestpiece"] = self.set_name
         elif self.item_slot == 'D':
-          self.equipped_pants.configure(text = self.sets[int(self.set_index)] + ' Pants')
+          self.equipped_pants.configure(text = self.set_name + ' Pants')
+          self.items_equipped["Pants"] = self.set_name
         elif self.item_slot == 'E':
-          self.equipped_gloves.configure(text = self.sets[int(self.set_index)] + ' Gloves')
+          self.equipped_gloves.configure(text = self.set_name + ' Gloves')
+          self.items_equipped["Gloves"] = self.set_name
         elif self.item_slot == 'F':
-          self.equipped_pauldrons.configure(text = self.sets[int(self.set_index)] + ' Pauldrons')
+          self.equipped_pauldrons.configure(text = self.set_name + ' Pauldrons')
+          self.items_equipped["Pauldrons"] = self.set_name
+        self.count_gear_mats()
+
+    
+    # Counts how many of what materials needed for equipped items
+    def count_gear_mats(self):
+       self.vykas_wings = 0
+       self.valtan_bones = 0
+       self.vykas_fang = 0
+       self.valtan_vein = 0
+       self.argos_blood = 0
+       self.oreha_empyrean = 0
+       for item in self.items_equipped:
+        self.item_set = self.items_equipped[item]
+        self.item_type = item
+        self.item_info = self.set_data['sets'][self.item_set][self.item_type]
+        if self.item_info["type"] == "Covetous Wing" :
+          self.vykas_wings += self.item_info["amount"]
+        if self.item_info["type"] == "Demonic Beast's Bone" :
+          self.valtan_bones += self.item_info["amount"]
+        if self.item_info["type"] == "Covetous Fang" :
+          self.vykas_fang += self.item_info["amount"]
+        if self.item_info["type"] == "Demonic Beast Vein" :
+          self.valtan_vein += self.item_info["amount"]
+        if self.item_info["type"] == "Argos's Blood" :
+          self.argos_blood += self.item_info["amount"]
+        if self.item_info["type"] == "Empyrean Dawn" :
+          self.oreha_empyrean += self.item_info["amount"]
+       self.show_gear_mats(self.vykas_wings, self.valtan_bones, self.vykas_fang, self.valtan_vein, self.argos_blood, self.oreha_empyrean)
+
+    
+    # Takes counted material requirements and displays them
+    def show_gear_mats(self, wings, bones, fangs, veins, bloods, empyreans):
+        if wings == 0:
+          self.required_wings.grid_forget()
+        else :
+          self.required_wings.configure(text = "Covetous Wing: " + str(wings))
+          self.required_wings.grid(row = 12, column = 1, sticky = "nsew")
+        if bones == 0:
+          self.required_bones.grid_forget()
+        else :
+          self.required_bones.configure(text = "Demon Beast's Bones: " + str(bones))
+          self.required_bones.grid(row = 13, column = 1, sticky = "nsew")
+        if fangs == 0:
+          self.required_fangs.grid_forget()
+        else :
+          self.required_fangs.configure(text = "Covetous Fangs: " + str(fangs))
+          self.required_fangs.grid(row = 14, column = 1, sticky = "nsew")
+        if veins == 0:
+          self.required_veins.grid_forget()
+        else :
+          self.required_veins.configure(text = "Demonic Beast Veins: " + str(veins))
+          self.required_veins.grid(row = 15, column = 1, sticky = "nsew")
+        if bloods == 0:
+          self.required_argos.grid_forget()
+        else :
+          self.required_argos.configure(text = "Argos's Bloods: " + str(bloods))
+          self.required_argos.grid(row = 16, column = 1, sticky = "nsew")
+        if empyreans == 0:
+          self.required_oreha.grid_forget()
+        else :
+          self.required_oreha.configure(text = "Empyrean Dawns: " + str(empyreans))
+          self.required_oreha.grid(row = 17, column = 1, sticky = "nsew")
+
+
+        
+
 
         
         
