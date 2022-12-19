@@ -32,7 +32,7 @@ class EngravingCalc(customtkinter.CTkFrame):
         
         # Top bar, figure out better way to put it in pages prob
         self.button_engragving = customtkinter.CTkButton(master=self.frame_content,
-                                                        text="Engraving",
+                                                        text="Engraving", 
                                                         width= 120, height= 32, corner_radius = 8,
                                                         text_font=("arial", 15), 
                                                         command=lambda: controller.show_frame("EngravingCalc"))

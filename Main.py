@@ -2,6 +2,7 @@ import tkinter as tk
 import customtkinter
 from StartPage import StartPage
 from Engraving import EngravingCalc
+from SetPlanner import SetPlanner
 from SkillTree import SkillTree
 from IncomeCalc import IncomeCalc
 
@@ -28,9 +29,8 @@ class App(tk.Tk):
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
         
-        
         self.frames = {}
-        for F in (StartPage, EngravingCalc,SkillTree,IncomeCalc):          #Remember to add new page to this!
+        for F in (StartPage, EngravingCalc,SkillTree,IncomeCalc, SetPlanner):          #Remember to add new page to this!
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
