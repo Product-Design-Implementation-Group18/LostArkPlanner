@@ -164,13 +164,8 @@ class EngravingCalc(customtkinter.CTkFrame):
             totals[total_nr].grid(row= 11, column = x) 
 
         #Calculate sum of spesified boxes to spesific label
-<<<<<<< Updated upstream
-        def test():
-            total = sum(int(e.get()) for e in (eglvls[0], eglvls[6],eglvls[12],eglvls[18],eglvls[24],eglvls[30],eglvls[36],eglvls[42]))
-=======
         def Calculate_Eng():
             total = sum(int(e.get()) for e in (eglvls[0], eglvls[6],eglvls[12],eglvls[18],eglvls[24],booklvls[0],booklvls[6],stonelvls[0]))
->>>>>>> Stashed changes
             totals[0].configure(text= total)
 
             total1 = sum(int(e.get()) for e in (eglvls[1], eglvls[7],eglvls[13],eglvls[19],eglvls[25],booklvls[1],booklvls[7],stonelvls[1]))
@@ -189,9 +184,6 @@ class EngravingCalc(customtkinter.CTkFrame):
             totals[5].configure(text = total5)
 
         #Calculate using the button
-        self.testbut = customtkinter.CTkButton(master=self.frame_content, command = lambda: test(), text="Calculate" )
+        self.testbut = customtkinter.CTkButton(master=self.frame_content, command = lambda: Calculate_Eng(), text="Calculate" )
         self.testbut.grid(row= 12, column = 3)
 
-        #Copy paste button command just swap showframe to page u want to enter
-        self.testbut2 = customtkinter.CTkButton(master=self.frame_content, command=lambda: controller.show_frame("StartPage"))
-        self.testbut2.grid(row= 12, column = 5)
