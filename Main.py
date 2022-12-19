@@ -2,8 +2,9 @@ import tkinter as tk
 import customtkinter
 from StartPage import StartPage
 from Engraving import EngravingCalc
-
+from SetPlanner import SetPlanner
 from SkillTree import SkillTree
+
 
 
 
@@ -29,7 +30,7 @@ class App(tk.Tk):
         
         
         self.frames = {}
-        for F in (StartPage, EngravingCalc,SkillTree):          #Remember to add new page to this!
+        for F in (StartPage, EngravingCalc, SetPlanner,SkillTree):          #Remember to add new page to this!
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame

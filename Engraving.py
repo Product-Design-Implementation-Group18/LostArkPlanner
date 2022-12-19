@@ -53,10 +53,9 @@ class EngravingCalc(customtkinter.CTkFrame):
                                                     text_font=("arial", 15))
         self.button_tripod.grid(row=1, column=2, pady=10, padx=10)
         self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
-                                                        text="Tier Set",
-                                                        width= 120, height= 32, corner_radius = 8,
-                                                        text_font=("arial", 15))
-        self.button_tier_set.grid(row=1, column=3, pady=10, padx=10) 
+                                                        text="Tier Set", width= 120, height= 32, corner_radius = 8,
+                                                        text_font=("arial", 15), command=lambda: controller.show_frame("SetPlanner"))
+        self.button_tier_set.grid(row=1, column=5, pady=10, padx=10) 
 
         # All engravings in a list   
         self.lst = ["--Combat Engraving--","Adrenaline","All-Out Attack","Ambush Master","Awakening","Barricade","Broken Bone","Contender","Crisis Evasion","Crushing Fist","Cursed Doll","Disrespect","Divine Protection",
