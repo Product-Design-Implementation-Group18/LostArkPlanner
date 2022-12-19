@@ -2,7 +2,12 @@ import tkinter as tk
 import customtkinter
 from StartPage import StartPage
 from Engraving import EngravingCalc
+<<<<<<< Updated upstream
 
+=======
+from SetPlanner import SetPlanner
+from SkillTree import SkillTree
+>>>>>>> Stashed changes
 
 
 
@@ -27,7 +32,11 @@ class App(tk.Tk):
         
         
         self.frames = {}
+<<<<<<< Updated upstream
         for F in (StartPage, EngravingCalc):          #Remember to add new page to this!
+=======
+        for F in (StartPage, EngravingCalc, SetPlanner,SkillTree):          #Remember to add new page to this!
+>>>>>>> Stashed changes
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -35,7 +44,7 @@ class App(tk.Tk):
             # put all of the pages in the same location, stacking them
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("EngravingCalc") # Change to start page, can use other page while developing
+        self.show_frame("SkillTree") # Change to start page, can use other page while developing
 
     def show_frame(self, page_name):
         # Show a frame for the given page name

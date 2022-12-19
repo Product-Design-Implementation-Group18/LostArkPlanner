@@ -58,7 +58,6 @@ class EngravingCalc(customtkinter.CTkFrame):
                                                         text_font=("arial", 15))
         self.button_tier_set.grid(row=1, column=3, pady=10, padx=10) 
 
-
         # All engravings in a list   
         self.lst = ["--Combat Engraving--","Adrenaline","All-Out Attack","Ambush Master","Awakening","Barricade","Broken Bone","Contender","Crisis Evasion","Crushing Fist","Cursed Doll","Disrespect","Divine Protection",
                     "Drops of Ether","Emergency Rescue","Enhanced Shield","Ether Predator","Expert","Explosive Expert","Fortitude","Grudge","Heavy Armor","Hit Master","Keen Blunt Weapon","Lightning Fury",
@@ -122,12 +121,30 @@ class EngravingCalc(customtkinter.CTkFrame):
         #Selection of engraving level
         eglvl_nr = -1
         eglvls = []
-        for x in range (3,11):
+        for x in range (3,8):
             for y in range (1,7):
                 eglvl_nr += 1
                 
-                eglvls.append(ttk.Entry(master=self.frame_content))
+                eglvls.append(customtkinter.CTkComboBox(master=self.frame_content, values = ["0","1","2","3","4","5","6"]))
                 eglvls[eglvl_nr].grid(row= x, column = y)
+        #Selection of stone
+        stonelvl_nr = -1
+        stonelvls = []
+        for y in range (1,7):
+            eglvl_nr += 1
+                
+            stonelvls.append(customtkinter.CTkComboBox(master=self.frame_content, values = ["0","1","2","3","4","5","6","7","8","9","10"]))
+            stonelvls[stonelvl_nr].grid(row= 8, column = y)
+
+        #Selection of book
+        booklvl_nr = -1
+        booklvls = []
+        for x in range (9,11):
+            for y in range (1,7):
+                booklvl_nr += 1
+                
+                booklvls.append(customtkinter.CTkComboBox(master=self.frame_content, values = ["0","3","6","9","12"]))
+                booklvls[booklvl_nr].grid(row= x, column = y)
 
         #Negative selection box
         negativeg_nr = -1
@@ -138,85 +155,37 @@ class EngravingCalc(customtkinter.CTkFrame):
             negative_eng.append(ttk.Entry(master = self.frame_content))
             negative_eng[negativeg_nr].grid(row= x, column = 8)
 
-        
-        # Need to create loop, test version (takes shit ton space)
-        eglvls[0].insert(0,"0")
-        eglvls[1].insert(0,"0")
-        eglvls[2].insert(0,"0")
-        eglvls[3].insert(0,"0")
-        eglvls[4].insert(0,"0")
-        eglvls[5].insert(0,"0")
-        eglvls[6].insert(0,"0")
-        eglvls[7].insert(0,"0")
-        eglvls[8].insert(0,"0")
-        eglvls[9].insert(0,"0")
-        eglvls[10].insert(0,"0")
-        eglvls[11].insert(0,"0")
-        eglvls[12].insert(0,"0")
-        eglvls[13].insert(0,"0")
-        eglvls[14].insert(0,"0")
-        eglvls[15].insert(0,"0")
-        eglvls[16].insert(0,"0")
-        eglvls[17].insert(0,"0")
-        eglvls[18].insert(0,"0")
-        eglvls[19].insert(0,"0")
-        eglvls[20].insert(0,"0")
-        eglvls[21].insert(0,"0")
-        eglvls[22].insert(0,"0")
-        eglvls[23].insert(0,"0")
-        eglvls[24].insert(0,"0")
-        eglvls[25].insert(0,"0")
-        eglvls[26].insert(0,"0")
-        eglvls[27].insert(0,"0")
-        eglvls[28].insert(0,"0")
-        eglvls[29].insert(0,"0")
-        eglvls[30].insert(0,"0")
-        eglvls[31].insert(0,"0")
-        eglvls[32].insert(0,"0")
-        eglvls[33].insert(0,"0")
-        eglvls[34].insert(0,"0")
-        eglvls[35].insert(0,"0")
-        eglvls[36].insert(0,"0")
-        eglvls[37].insert(0,"0")
-        eglvls[38].insert(0,"0")
-        eglvls[39].insert(0,"0")
-        eglvls[40].insert(0,"0")
-        eglvls[41].insert(0,"0")
-        eglvls[42].insert(0,"0")
-        eglvls[43].insert(0,"0")
-        eglvls[44].insert(0,"0")
-        eglvls[45].insert(0,"0")
-        eglvls[46].insert(0,"0")
-        eglvls[47].insert(0,"0")
-        # Ends Rly need to create loop
-
         #label with the correct value
         total_nr = -1
         totals = []
         for x in range (1, 10):
             total_nr += 1
-
             totals.append(customtkinter.CTkLabel(master=self.frame_content, text = ''))
             totals[total_nr].grid(row= 11, column = x) 
 
         #Calculate sum of spesified boxes to spesific label
+<<<<<<< Updated upstream
         def test():
             total = sum(int(e.get()) for e in (eglvls[0], eglvls[6],eglvls[12],eglvls[18],eglvls[24],eglvls[30],eglvls[36],eglvls[42]))
+=======
+        def Calculate_Eng():
+            total = sum(int(e.get()) for e in (eglvls[0], eglvls[6],eglvls[12],eglvls[18],eglvls[24],booklvls[0],booklvls[6],stonelvls[0]))
+>>>>>>> Stashed changes
             totals[0].configure(text= total)
 
-            total1 = sum(int(e.get()) for e in (eglvls[1], eglvls[7],eglvls[13],eglvls[19],eglvls[25],eglvls[31],eglvls[37],eglvls[43]))
+            total1 = sum(int(e.get()) for e in (eglvls[1], eglvls[7],eglvls[13],eglvls[19],eglvls[25],booklvls[1],booklvls[7],stonelvls[1]))
             totals[1].configure(text = total1)
 
-            total2 = sum(int(e.get()) for e in (eglvls[2], eglvls[8],eglvls[14],eglvls[20],eglvls[26],eglvls[32],eglvls[38],eglvls[44]))
+            total2 = sum(int(e.get()) for e in (eglvls[2], eglvls[8],eglvls[14],eglvls[20],eglvls[26],booklvls[2],booklvls[8],stonelvls[2]))
             totals[2].configure(text = total2)
 
-            total3 = sum(int(e.get()) for e in (eglvls[3], eglvls[9],eglvls[15],eglvls[21],eglvls[27],eglvls[33],eglvls[39],eglvls[45]))
+            total3 = sum(int(e.get()) for e in (eglvls[3], eglvls[9],eglvls[15],eglvls[21],eglvls[27],booklvls[3],booklvls[9],stonelvls[3]))
             totals[3].configure(text = total3)
 
-            total4 = sum(int(e.get()) for e in (eglvls[4], eglvls[10],eglvls[16],eglvls[22],eglvls[28],eglvls[34],eglvls[40],eglvls[46]))
+            total4 = sum(int(e.get()) for e in (eglvls[4], eglvls[10],eglvls[16],eglvls[22],eglvls[28],booklvls[4],booklvls[10],stonelvls[4]))
             totals[4].configure(text = total4)
 
-            total5 = sum(int(e.get()) for e in (eglvls[5], eglvls[11],eglvls[17],eglvls[23],eglvls[29],eglvls[35],eglvls[41],eglvls[47]))
+            total5 = sum(int(e.get()) for e in (eglvls[5], eglvls[11],eglvls[17],eglvls[23],eglvls[29],booklvls[5],booklvls[11],stonelvls[5]))
             totals[5].configure(text = total5)
 
         #Calculate using the button
