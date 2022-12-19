@@ -25,17 +25,10 @@ class SetPlanner(customtkinter.CTkFrame):
                                                     text="Roster",
                                                     text_font=("arial-bold", 23))  # font name and size in px
         self.label_roster.grid(row=1, column=0, pady=10, padx=10)
-        
-        self.menu_roster = customtkinter.CTkOptionMenu(master=self.frame_menu,
-                                                        values=["Gunlancer", "Gigachad", "Scrapper"], # Need to make command to swap to spesific char + get values from string etc.. and be able to make character
-                                                        text_font=("arial", 15)) 
-        self.menu_roster.grid(row=2, column=0, pady=10, padx=20, sticky="n")
 
-        self.button_gemcutter = customtkinter.CTkButton(master=self.frame_menu,text="Gem Cutter", text_font=("arial", 15))
-        self.button_gemcutter.grid(row=3, column=0, pady=15, padx=20)  
+        self.main_menu = customtkinter.CTkButton(master=self.frame_menu,text="Home", text_font=("arial", 15), command=lambda: controller.show_frame("StartPage"))
+        self.main_menu.grid(row=2, column=0, pady=10, padx=20, sticky="n") 
 
-        #  #  Made it disabled until we start / know we have enough time # #
-        self.button_gemcutter.configure(state="disabled")
 
         # Top bar, figure out better way to put it in pages prob
         self.button_engragving = customtkinter.CTkButton(master=self.frame_content, 

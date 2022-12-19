@@ -164,12 +164,14 @@ class SkillTree(customtkinter.CTkFrame):
             self.tripodsLabel.configure(text='')
             self.skillName.configure(text='')
             self.skillDesc.configure(text='')
+            self.tripodTier.configure(text= '')
             tripods[0].configure(text='')
             tripods[1].configure(text='')
             tripods[2].configure(text='')
             tripods[3].configure(text='')
             tripods[4].configure(text='')
             tripods[5].configure(text='')
+
 
             # Simplified data fetching.
             for value in data:
@@ -198,6 +200,7 @@ class SkillTree(customtkinter.CTkFrame):
             tripods[1].configure(text= '' )
             tripods[3].configure(text= '' )
             tripods[5].configure(text= '' )
+            self.tripodTier.configure(text= '')
                   
             self.buttontest = customtkinter.CTkButton(master=self.frame_content, text = "Add tripod", command = lambda: addTripod())
             self.buttontest.grid(row=10, column = 10)
