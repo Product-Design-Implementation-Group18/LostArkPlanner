@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import TclError, ttk
+from tkinter import ttk
 import customtkinter
 import json
 
@@ -27,17 +27,10 @@ class SkillTree(customtkinter.CTkFrame):
                                                     text="Roster",
                                                     text_font=("arial-bold", 23))  # font name and size in px
         self.label_roster.grid(row=1, column=0, pady=10, padx=10)
+
+        self.main_menu = customtkinter.CTkButton(master=self.frame_menu,text="Home", text_font=("arial", 15), command=lambda: controller.show_frame("StartPage"))
+        self.main_menu.grid(row=2, column=0, pady=10, padx=20, sticky="n")
         
-        self.menu_roster = customtkinter.CTkOptionMenu(master=self.frame_menu,
-                                                        values=["Gunlancer", "Gigachad", "Scrapper"], # Need to make command to swap to spesific char + get values from string etc.. and be able to make character
-                                                        text_font=("arial", 15)) 
-        self.menu_roster.grid(row=2, column=0, pady=10, padx=20, sticky="n")
-
-        self.button_gemcutter = customtkinter.CTkButton(master=self.frame_menu,text="Gem Cutter", text_font=("arial", 15))
-        self.button_gemcutter.grid(row=3, column=0, pady=15, padx=20)  
-
-        #  #  Made it disabled until we start / know we have enough time # #
-        self.button_gemcutter.configure(state="disabled")
 
 
         # Top bar, figure out better way to put it in pages prob
@@ -48,8 +41,9 @@ class SkillTree(customtkinter.CTkFrame):
                                                         command=lambda: controller.show_frame("EngravingCalc"))
         self.button_engragving.grid(row=1, column=1, pady=10, padx=10) 
         self.button_tripod = customtkinter.CTkButton(master=self.frame_content,
-                                                    text="Tripod", width= 120, height= 32, corner_radius = 8,
-                                                    text_font=("arial", 15))
+                                                    text="Spellbook", width= 120, height= 32, corner_radius = 8,
+                                                    text_font=("arial", 15), 
+                                                    command=lambda: controller.show_frame("SkillTree"))
         self.button_tripod.grid(row=1, column=2, pady=10, padx=10)
         self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
                                                         text="Tier Set", width= 120, height= 32, corner_radius = 8,
@@ -136,13 +130,19 @@ class SkillTree(customtkinter.CTkFrame):
                                                 justify = 'center', 
                                                 text_font = ('arial', 15))
         self.tripodName.grid(row = 10, column = 6, padx=10)
+        self.tripodTier = customtkinter.CTkLabel(master = self.frame_content,
+                                                text = '',
+                                                width = 20,  
+                                                justify = 'center', 
+                                                text_font = ('arial', 15))
+        self.tripodTier.grid(row = 11, column = 6, padx=10)
         self.tripodDesc = customtkinter.CTkLabel(master = self.frame_content, 
                                                 text = '',
                                                 width=10,
                                                 text_font = ('arial', 11),
                                                 wraplength=300,
                                                 justify = 'left')
-        self.tripodDesc.grid(row=11, column = 6, padx=10)
+        self.tripodDesc.grid(row=12, column = 6, padx=10)
 
 
 
@@ -194,6 +194,7 @@ class SkillTree(customtkinter.CTkFrame):
             self.tripod_tree.delete(*self.tripod_tree.get_children())
             self.tripodName.configure(text='')
             self.tripodDesc.configure(text='')
+            self.tripodTier.configure(text='')
             tripods[1].configure(text= '' )
             tripods[3].configure(text= '' )
             tripods[5].configure(text= '' )
@@ -238,6 +239,8 @@ class SkillTree(customtkinter.CTkFrame):
                         if tripod_name == tripod['name']:
                             self.tripodName.configure(text=tripod['name'])
                             self.tripodDesc.configure(text=tripod['desc'])
+                            self.tripodTier.configure(text= 'Tier ' + tripod['tripodlevel'])
+
 
         def addTripod():
             #Focus on skill tree and get details on what was clicked
