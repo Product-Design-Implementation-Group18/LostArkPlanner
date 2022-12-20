@@ -26,6 +26,10 @@ class SetPlanner(customtkinter.CTkFrame):
                                                     text="Roster",
                                                     text_font=("arial-bold", 23))  # font name and size in px
         self.label_roster.grid(row=1, column=0, pady=10, padx=10)
+
+        self.main_menu = customtkinter.CTkButton(master=self.frame_menu,text="Home", text_font=("arial", 15), command=lambda: controller.show_frame("StartPage"))
+        self.main_menu.grid(row=2, column=0, pady=10, padx=20, sticky="n") 
+
         
         # Open roster data from a JSON file
         with open('Characters.json', encoding = 'utf-8') as chars:
@@ -83,7 +87,7 @@ class SetPlanner(customtkinter.CTkFrame):
 
         # Loop through all roster characters and make labels for each
         for i in range(self.char_amount):
-          self.char_row = i + 2
+          self.char_row = i + 3
           self.image_name = self.char_data['Roster'][self.char_names[i-1]]['Class'].lower()
           self.char_label = ttk.Label(
                                       master = self.frame_menu,
@@ -97,6 +101,7 @@ class SetPlanner(customtkinter.CTkFrame):
                                       )
           self.char_label.grid(row = self.char_row, column = 0, pady = 20)
           self.char_label.bind('<Button-1>', self.change_character)
+
 
 
         # Top bar, figure out better way to put it in pages prob

@@ -3,6 +3,9 @@ import customtkinter
 from StartPage import StartPage
 from Engraving import EngravingCalc
 from SetPlanner import SetPlanner
+from SkillTree import SkillTree
+from IncomeCalc import IncomeCalc
+
 
 
 
@@ -18,7 +21,7 @@ class App(tk.Tk):
 
         # Setting size and name of the app
         self.title("Lost Ark Planner")
-        
+        self.geometry('1800x900+100+100')
 
         # Container to stack frames ontop of each other
         container = customtkinter.CTkFrame(self)
@@ -27,7 +30,7 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
         
         self.frames = {}
-        for F in (StartPage, EngravingCalc, SetPlanner):          #Remember to add new page to this!
+        for F in (StartPage, EngravingCalc,SkillTree,IncomeCalc, SetPlanner):          #Remember to add new page to this!
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -35,7 +38,7 @@ class App(tk.Tk):
             # put all of the pages in the same location, stacking them
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("EngravingCalc") # Change to start page, can use other page while developing
+        self.show_frame("StartPage") # Change to start page, can use other page while developing
 
     def show_frame(self, page_name):
         # Show a frame for the given page name
