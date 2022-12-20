@@ -409,7 +409,7 @@ class SetPlanner(customtkinter.CTkFrame):
           self.valtan_bones += self.item_info["amount"]
         if self.item_info["type"] == "Covetous Fang" :
           self.vykas_fang += self.item_info["amount"]
-        if self.item_info["type"] == "Demonic Beast Vein" :
+        if self.item_info["type"] == "Demon Beast Vein" :
           self.valtan_vein += self.item_info["amount"]
         if self.item_info["type"] == "Argos's Blood" :
           self.argos_blood += self.item_info["amount"]
