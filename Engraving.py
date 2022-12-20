@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter
+import json
 
 class EngravingCalc(customtkinter.CTkFrame):
 
@@ -28,6 +29,79 @@ class EngravingCalc(customtkinter.CTkFrame):
 
         self.main_menu = customtkinter.CTkButton(master=self.frame_menu,text="Home", text_font=("arial", 15), command=lambda: controller.show_frame("StartPage"))
         self.main_menu.grid(row=2, column=0, pady=10, padx=20, sticky="n")
+
+
+        # Open roster data from a JSON file
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.char_data = json.load(chars)
+        self.char_amount = len(self.char_data['Roster'])
+        self.char_names = list(self.char_data['Roster'])
+
+        # A dictionary of class icons that can be called later
+        self.class_icons = {}
+
+        self.arcana = tk.PhotoImage(file='./Icons/arcana.png').subsample(5,5)
+        self.class_icons['arcana'] = self.arcana
+        self.artillerist = tk.PhotoImage(file='./Icons/artillerist.png').subsample(5,5)
+        self.class_icons['artillerist'] = self.artillerist
+        self.artist = tk.PhotoImage(file='./Icons/artist.png').subsample(5,5)
+        self.class_icons['artist'] = self.artist
+        self.bard = tk.PhotoImage(file='./Icons/bard.png').subsample(5,5)
+        self.class_icons['bard'] = self.bard
+        self.berserker = tk.PhotoImage(file='./Icons/berserker.png').subsample(5,5)
+        self.class_icons['berserker'] = self.berserker
+        self.deadeye = tk.PhotoImage(file='./Icons/deadeye.png').subsample(5,5)
+        self.class_icons['deadeye'] = self.deadeye
+        self.deathblade = tk.PhotoImage(file='./Icons/deathblade.png').subsample(5,5)
+        self.class_icons['deathblade'] = self.deathblade
+        self.destroyer = tk.PhotoImage(file='./Icons/destroyer.png').subsample(5,5)
+        self.class_icons['destroyer'] = self.destroyer
+        self.glaivier = tk.PhotoImage(file='./Icons/glaivier.png').subsample(5,5)
+        self.class_icons['glaivier'] = self.glaivier
+        self.gunlancer = tk.PhotoImage(file='./Icons/gunlancer.png').subsample(5,5)
+        self.class_icons['gunlancer'] = self.gunlancer
+        self.gunslinger = tk.PhotoImage(file='./Icons/gunslinger.png').subsample(5,5)
+        self.class_icons['gunslinger'] = self.gunslinger
+        self.paladin = tk.PhotoImage(file='./Icons/paladin.png').subsample(5,5)
+        self.class_icons['paladin'] = self.paladin
+        self.reaper = tk.PhotoImage(file='./Icons/reaper.png').subsample(5,5)
+        self.class_icons['reaper'] = self.reaper
+        self.scouter = tk.PhotoImage(file='./Icons/scouter.png').subsample(5,5)
+        self.class_icons['scouter'] = self.scouter
+        self.scrapper = tk.PhotoImage(file='./Icons/scrapper.png').subsample(5,5)
+        self.class_icons['scrapper'] = self.scrapper
+        self.shadowhunter = tk.PhotoImage(file='./Icons/shadowhunter.png').subsample(5,5)
+        self.class_icons['shadowhunter'] = self.shadowhunter
+        self.sharpshooter = tk.PhotoImage(file='./Icons/sharpshooter.png').subsample(5,5)
+        self.class_icons['sharpshooter'] = self.sharpshooter
+        self.sorceress = tk.PhotoImage(file='./Icons/sorceress.png').subsample(5,5)
+        self.class_icons['sorceress'] = self.sorceress
+        self.soulfist = tk.PhotoImage(file='./Icons/soulfist.png').subsample(5,5)
+        self.class_icons['soulfist'] = self.soulfist
+        self.striker = tk.PhotoImage(file='./Icons/striker.png').subsample(5,5)
+        self.class_icons['striker'] = self.striker
+        self.summoner = tk.PhotoImage(file='./Icons/summoner.png').subsample(5,5)
+        self.class_icons['summoner'] = self.summoner
+        self.wardancer = tk.PhotoImage(file='./Icons/wardancer.png').subsample(5,5)
+        self.class_icons['wardancer'] = self.wardancer
+
+        # Loop through all roster characters and make labels for each
+        for i in range(self.char_amount):
+          self.char_row = i + 3
+          self.image_name = self.char_data['Roster'][self.char_names[i-1]]['Class'].lower()
+          self.char_label = ttk.Label(
+                                      master = self.frame_menu,
+                                      text = self.char_names[i-1],
+                                      font=('arial', 15),
+                                      image = self.class_icons[self.image_name],
+                                      compound = 'left',    
+                                      anchor = 'w',
+                                      background='#292929',
+                                      foreground='white'
+                                      )
+          self.char_label.grid(row = self.char_row, column = 0, pady = 20)
+          self.char_label.bind('<Button-1>', self.change_character)
+
         
         
         # Top bar, figure out better way to put it in pages prob
@@ -176,3 +250,12 @@ class EngravingCalc(customtkinter.CTkFrame):
         self.testbut = customtkinter.CTkButton(master=self.frame_content, command = lambda: Calculate_Eng(), text="Calculate" )
         self.testbut.grid(row= 12, column = 3)
 
+
+    # Function for changing character from sidebar
+    def change_character(self, event):
+        self.character = event.widget
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.char_data = json.load(chars)
+        self.char_data['active_character'] = self.character.cget("text")
+        with open("Characters.json", 'w', encoding = 'utf-8') as chars:
+          json.dump(self.char_data, chars, indent=2, ensure_ascii = False)
