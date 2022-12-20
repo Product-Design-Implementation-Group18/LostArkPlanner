@@ -70,7 +70,7 @@ class StartPage(customtkinter.CTkFrame):
                                                 text = 'This page you can read what your skills and the tripods for your skills do. You can also simulate adding Tripods to your skills and make different variations of it.', wraplength=200)
         self.tripodInfo.grid(row= 6, column = 3, sticky = 'n', padx=20, pady=20)
         self.tier_setInfo = customtkinter.CTkLabel(master=self.frame_content,
-                                                text = 'Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa Blaa blaa', wraplength=200)
+                                                text = 'In this page you can see all the different sets available in the game and plan equipped gear pieces for your characters.', wraplength=200)
         self.tier_setInfo.grid(row= 6, column = 4, sticky = 'n', padx=20, pady=20)
         self.goldInc = customtkinter.CTkLabel(master=self.frame_content,
                                                 text = 'Calculate how much gold income you have weekly. You can calculate how much each character can earn weekly from dungeons/raids. You also have option to add Weekly gold income to the total.', wraplength=200)
