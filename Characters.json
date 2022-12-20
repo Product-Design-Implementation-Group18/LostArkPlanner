@@ -1,0 +1,150 @@
+{
+  "Roster": {
+    "Taiantekijä": {
+      "Class": "Sorceress",
+      "Gear": {
+        "Weapon": "Selection",
+        "Headpiece": "Betrayal Instinct",
+        "Chestpiece": "Betrayal Instinct",
+        "Pants": "Preordained Diligence",
+        "Gloves": "Dominion Fang",
+        "Pauldrons": "Dominion Fang"
+      },
+      "Skills": {},
+      "ilvl": 1370,
+      "Jewelry": {
+        "Amulet": {},
+        "Earring 1": {},
+        "Earring 2": {},
+        "Ring 1": {},
+        "Ring 2": {},
+        "Ability Stone": {},
+        "Engraving Book 1": {
+          "Engraving": "Grudge",
+          "amount": 9
+        },
+        "Engraving Book 2": {
+          "Engraving": "Igniter",
+          "amount": 9
+        }
+      }
+    },
+    "Bonkintekijä": {
+      "Class": "Destroyer",
+      "Gear": {
+        "Weapon": "Earth's Entropy",
+        "Headpiece": "Demon Beast Strength",
+        "Chestpiece": "Preordained Diligence",
+        "Pants": "Poem of Salvation",
+        "Gloves": "Preordained Diligence",
+        "Pauldrons": "Preordained Diligence"
+      },
+      "Skills": {},
+      "ilvl": 1460,
+      "Jewelry": {
+        "Amulet": {},
+        "Earring 1": {},
+        "Earring 2": {},
+        "Ring 1": {},
+        "Ring 2": {},
+        "Ability Stone": {},
+        "Engraving Book 1": {
+          "Engraving": "Grudge",
+          "amount": 9
+        },
+        "Engraving Book 2": {
+          "Engraving": "Igniter",
+          "amount": 9
+        }
+      }
+    },
+    "Nyrkintekijä": {
+      "Class": "Scrapper",
+      "Gear": {
+        "Weapon": "Selection",
+        "Headpiece": "Preordained Diligence",
+        "Chestpiece": "Preordained Diligence",
+        "Pants": "Preordained Diligence",
+        "Gloves": "Preordained Diligence",
+        "Pauldrons": "Preordained Diligence"
+      },
+      "Skills": {},
+      "ilvl": 1415,
+      "Jewelry": {
+        "Amulet": {},
+        "Earring 1": {},
+        "Earring 2": {},
+        "Ring 1": {},
+        "Ring 2": {},
+        "Ability Stone": {},
+        "Engraving Book 1": {
+          "Engraving": "Grudge",
+          "amount": 9
+        },
+        "Engraving Book 2": {
+          "Engraving": "Igniter",
+          "amount": 9
+        }
+      }
+    },
+    "Hypentekijä": {
+      "Class": "Soulfist",
+      "Gear": {
+        "Weapon": "Selection",
+        "Headpiece": "Selection",
+        "Chestpiece": "Preordained Diligence",
+        "Pants": "Selection",
+        "Gloves": "Preordained Diligence",
+        "Pauldrons": "Preordained Diligence"
+      },
+      "Skills": {},
+      "ilvl": 1432.5,
+      "Jewelry": {
+        "Amulet": {},
+        "Earring 1": {},
+        "Earring 2": {},
+        "Ring 1": {},
+        "Ring 2": {},
+        "Ability Stone": {},
+        "Engraving Book 1": {
+          "Engraving": "Grudge",
+          "amount": 9
+        },
+        "Engraving Book 2": {
+          "Engraving": "Igniter",
+          "amount": 9
+        }
+      }
+    },
+    "Potkuntekijä": {
+      "Class": "Wardancer",
+      "Gear": {
+        "Weapon": "Nightmare Flower",
+        "Headpiece": "Dominion Fang",
+        "Chestpiece": "Dominion Fang",
+        "Pants": "Nightmare Flower",
+        "Gloves": "Preordained Diligence",
+        "Pauldrons": "Preordained Diligence"
+      },
+      "Skills": {},
+      "ilvl": 1445,
+      "Jewelry": {
+        "Amulet": {},
+        "Earring 1": {},
+        "Earring 2": {},
+        "Ring 1": {},
+        "Ring 2": {},
+        "Ability Stone": {},
+        "Engraving Book 1": {
+          "Engraving": "Grudge",
+          "amount": 9
+        },
+        "Engraving Book 2": {
+          "Engraving": "Igniter",
+          "amount": 9
+        }
+      }
+    }
+  },
+  "active_character": "Potkuntekijä"
+}

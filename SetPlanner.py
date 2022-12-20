@@ -17,8 +17,8 @@ class SetPlanner(customtkinter.CTkFrame):
         self.frame_content = customtkinter.CTkFrame(master=self)
         self.frame_content.grid(row=0, column=1, sticky="nswe", padx=20, pady=20) # (nswe makes it fill)
 
-         # Create menu frame on left grid               /             Need to figure out smarter way for this!!!!!
-        self.frame_menu = customtkinter.CTkFrame(master=self,width=200,corner_radius=0)
+        # Create menu frame on left grid               /             Need to figure out smarter way for this!!!!!
+        self.frame_menu = customtkinter.CTkFrame(master=self,width=300,corner_radius=0)
         self.frame_menu.grid(row=0, column=0, sticky="nswe") # (nswe makes it fill)
 
          #+++++++++++++  Menu frame  +++++++++++++++++
@@ -27,16 +27,77 @@ class SetPlanner(customtkinter.CTkFrame):
                                                     text_font=("arial-bold", 23))  # font name and size in px
         self.label_roster.grid(row=1, column=0, pady=10, padx=10)
         
-        self.menu_roster = customtkinter.CTkOptionMenu(master=self.frame_menu,
-                                                        values=["Gunlancer", "Gigachad", "Scrapper"], # Need to make command to swap to spesific char + get values from string etc.. and be able to make character
-                                                        text_font=("arial", 15)) 
-        self.menu_roster.grid(row=2, column=0, pady=10, padx=20, sticky="n")
+        # Open roster data from a JSON file
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.char_data = json.load(chars)
+        self.char_amount = len(self.char_data['Roster'])
+        self.char_names = list(self.char_data['Roster'])
 
-        self.button_gemcutter = customtkinter.CTkButton(master=self.frame_menu,text="Gem Cutter", text_font=("arial", 15))
-        self.button_gemcutter.grid(row=3, column=0, pady=15, padx=20)  
+        # A dictionary of class icons that can be called later
+        self.class_icons = {}
 
-        #  #  Made it disabled until we start / know we have enough time # #
-        self.button_gemcutter.configure(state="disabled")
+        self.arcana = tk.PhotoImage(file='./Icons/arcana.png').subsample(5,5)
+        self.class_icons['arcana'] = self.arcana
+        self.artillerist = tk.PhotoImage(file='./Icons/artillerist.png').subsample(5,5)
+        self.class_icons['artillerist'] = self.artillerist
+        self.artist = tk.PhotoImage(file='./Icons/artist.png').subsample(5,5)
+        self.class_icons['artist'] = self.artist
+        self.bard = tk.PhotoImage(file='./Icons/bard.png').subsample(5,5)
+        self.class_icons['bard'] = self.bard
+        self.berserker = tk.PhotoImage(file='./Icons/berserker.png').subsample(5,5)
+        self.class_icons['berserker'] = self.berserker
+        self.deadeye = tk.PhotoImage(file='./Icons/deadeye.png').subsample(5,5)
+        self.class_icons['deadeye'] = self.deadeye
+        self.deathblade = tk.PhotoImage(file='./Icons/deathblade.png').subsample(5,5)
+        self.class_icons['deathblade'] = self.deathblade
+        self.destroyer = tk.PhotoImage(file='./Icons/destroyer.png').subsample(5,5)
+        self.class_icons['destroyer'] = self.destroyer
+        self.glaivier = tk.PhotoImage(file='./Icons/glaivier.png').subsample(5,5)
+        self.class_icons['glaivier'] = self.glaivier
+        self.gunlancer = tk.PhotoImage(file='./Icons/gunlancer.png').subsample(5,5)
+        self.class_icons['gunlancer'] = self.gunlancer
+        self.gunslinger = tk.PhotoImage(file='./Icons/gunslinger.png').subsample(5,5)
+        self.class_icons['gunslinger'] = self.gunslinger
+        self.paladin = tk.PhotoImage(file='./Icons/paladin.png').subsample(5,5)
+        self.class_icons['paladin'] = self.paladin
+        self.reaper = tk.PhotoImage(file='./Icons/reaper.png').subsample(5,5)
+        self.class_icons['reaper'] = self.reaper
+        self.scouter = tk.PhotoImage(file='./Icons/scouter.png').subsample(5,5)
+        self.class_icons['scouter'] = self.scouter
+        self.scrapper = tk.PhotoImage(file='./Icons/scrapper.png').subsample(5,5)
+        self.class_icons['scrapper'] = self.scrapper
+        self.shadowhunter = tk.PhotoImage(file='./Icons/shadowhunter.png').subsample(5,5)
+        self.class_icons['shadowhunter'] = self.shadowhunter
+        self.sharpshooter = tk.PhotoImage(file='./Icons/sharpshooter.png').subsample(5,5)
+        self.class_icons['sharpshooter'] = self.sharpshooter
+        self.sorceress = tk.PhotoImage(file='./Icons/sorceress.png').subsample(5,5)
+        self.class_icons['sorceress'] = self.sorceress
+        self.soulfist = tk.PhotoImage(file='./Icons/soulfist.png').subsample(5,5)
+        self.class_icons['soulfist'] = self.soulfist
+        self.striker = tk.PhotoImage(file='./Icons/striker.png').subsample(5,5)
+        self.class_icons['striker'] = self.striker
+        self.summoner = tk.PhotoImage(file='./Icons/summoner.png').subsample(5,5)
+        self.class_icons['summoner'] = self.summoner
+        self.wardancer = tk.PhotoImage(file='./Icons/wardancer.png').subsample(5,5)
+        self.class_icons['wardancer'] = self.wardancer
+
+        # Loop through all roster characters and make labels for each
+        for i in range(self.char_amount):
+          self.char_row = i + 2
+          self.image_name = self.char_data['Roster'][self.char_names[i-1]]['Class'].lower()
+          self.char_label = ttk.Label(
+                                      master = self.frame_menu,
+                                      text = self.char_names[i-1],
+                                      font=('arial', 15),
+                                      image = self.class_icons[self.image_name],
+                                      compound = 'left',    
+                                      anchor = 'w',
+                                      background='#292929',
+                                      foreground='white'
+                                      )
+          self.char_label.grid(row = self.char_row, column = 0, pady = 20)
+          self.char_label.bind('<Button-1>', self.change_character)
+
 
         # Top bar, figure out better way to put it in pages prob
         self.button_engragving = customtkinter.CTkButton(master=self.frame_content, 
@@ -64,21 +125,31 @@ class SetPlanner(customtkinter.CTkFrame):
         # Make an indexable list from set names for functions
         self.set_data_list = list(self.set_data['sets'])
 
+        # Load current character from JSON file
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.character_info = json.load(chars)
+        self.active_character = self.character_info['active_character']
+        # Load active character gear
+        self.active_character_gear = self.character_info['Roster'][self.active_character]['Gear']
+        
+
         # Dictionary for storing current equipped gear
         self.items_equipped = {
-          "Weapon" : "Earth's Entropy",
-          "Headpiece" : "Earth's Entropy",
-          "Chestpiece" : "Earth's Entropy",
-          "Pants" : "Earth's Entropy",
-          "Gloves" : "Earth's Entropy",
-          "Pauldrons" : "Earth's Entropy"
+          "Weapon" : "Selection",
+          "Headpiece" : "Selection",
+          "Chestpiece" : "Selection",
+          "Pants" : "Selection",
+          "Gloves" : "Selection",
+          "Pauldrons" : "Selection"
         }
+
+        self.items_equipped = self.active_character_gear
 
         #Create a treeview for displaying all sets
         self.set_header = ttk.Treeview(self.frame_content, height=20, show = 'tree', selectmode='browse', style='SetPlanner.Treeview')
         self.set_header.heading('#0')
         self.set_header.column('#0', width=300, anchor='w')
-        self.set_header.grid(row = 0, column= 1, pady=50, padx=10, sticky = 'nesw', rowspan=20)
+        self.set_header.grid(row = 2, column= 1, pady=50, padx=10, sticky = 'nesw', rowspan=20)
 
         #Populate treeview with sets and set parts as children
         for index, set in enumerate(self.set_data['sets']):
@@ -102,8 +173,8 @@ class SetPlanner(customtkinter.CTkFrame):
         self.set_header.tag_bind('set_item', '<Double-Button>', self.switch_equipped)
 
         #+++++++++++++++ SET INFO COLUMN ++++++++++++++++++
-        self.set_info_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25)
-        self.set_info_frame.grid(row = 1, column = 2, sticky = "nsew", rowspan = 20)
+        self.set_info_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25, pady = 50)
+        self.set_info_frame.grid(row = 2, column = 2, sticky = "nsew", rowspan = 20)
 
         self.set_info_name = customtkinter.CTkLabel(master = self.set_info_frame,
                                                text = "Click on a set to display its bonuses here",
@@ -142,8 +213,8 @@ class SetPlanner(customtkinter.CTkFrame):
         self.test_icon_smaller = self.test_icon.subsample(5,5)
 
         #+++++++++++++++ EQUIPPED ITEMS COLUMN ++++++++++++++++++
-        self.set_equip_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25)
-        self.set_equip_frame.grid(row = 1, column = 3, sticky = "nsew", rowspan = 20)
+        self.set_equip_frame = customtkinter.CTkFrame(master = self.frame_content, width = 300, fg_color = '#292929', padx = 25, pady = 50)
+        self.set_equip_frame.grid(row = 2, column = 3, sticky = "nsew", rowspan = 20)
 
         self.equipped = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = "Currently equipped:",
@@ -152,59 +223,59 @@ class SetPlanner(customtkinter.CTkFrame):
         self.equipped.grid(row = 2, column = 1, sticky = "nsew")
 
         self.equipped_weapon = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Weapon",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',
                                                anchor = 'w')
-        self.equipped_weapon.grid(row = 3, column = 1, sticky = "nsew")
+        self.equipped_weapon.grid(row = 3, column = 1, sticky = "nsew", pady = 10)
 
         self.equipped_headpiece = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Headpiece",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_headpiece.grid(row = 4, column = 1, sticky = "nsew")
+        self.equipped_headpiece.grid(row = 4, column = 1, sticky = "nsew", pady = 10)
 
         self.equipped_chestpiece = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Chestpiece",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_chestpiece.grid(row = 5, column = 1, sticky = "nsew")
+        self.equipped_chestpiece.grid(row = 5, column = 1, sticky = "nsew", pady = 10)
 
         self.equipped_pants = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Pants",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_pants.grid(row = 6, column = 1, sticky = "nsew")
+        self.equipped_pants.grid(row = 6, column = 1, sticky = "nsew", pady = 10)
 
         self.equipped_gloves = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Gloves",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_gloves.grid(row = 7, column = 1, sticky = "nsew")
+        self.equipped_gloves.grid(row = 7, column = 1, sticky = "nsew", pady = 10)
 
         self.equipped_pauldrons = customtkinter.CTkLabel(master = self.set_equip_frame,
-                                               text = " Earth's Entropy Pauldrons",
+                                               text = " ",
                                                text_font = ('arial', 13),
                                                image = self.test_icon_smaller,
                                                compound = 'left',                                               
                                                anchor = 'w')
-        self.equipped_pauldrons.grid(row = 8, column = 1, sticky = "nsew")
+        self.equipped_pauldrons.grid(row = 8, column = 1, sticky = "nsew", pady = 10)
 
 
         self.required_mats = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = "Required materials:",
                                                text_font = ('arial', 15),                                               
                                                anchor = 'w')
-        self.required_mats.grid(row = 11, column = 1, sticky = "nsew")
+        self.required_mats.grid(row = 11, column = 1, sticky = "nsew", pady = 30)
 
         self.required_bones = customtkinter.CTkLabel(master = self.set_equip_frame,
                                                text = "",
@@ -242,16 +313,40 @@ class SetPlanner(customtkinter.CTkFrame):
                                                anchor = 'w')
         self.required_oreha.grid(row = 17, column = 1, sticky = "nsew")
 
-        #Count gear mats on load
+        # Show current gear on load
+        self.update_gear()
+
+        # Count gear mats on load
         self.count_gear_mats()
 
-
+    # Function for changing character from sidebar
+    def change_character(self, event):
+        self.character = event.widget
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.char_data = json.load(chars)
+        self.char_data['active_character'] = self.character.cget("text")
+        with open("Characters.json", 'w', encoding = 'utf-8') as chars:
+          json.dump(self.char_data, chars, indent=2, ensure_ascii = False)
+        self.update_gear()
+        self.count_gear_mats()
+    
+    # Function for updating equipped gear based on active character
+    def update_gear(self) :
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.character_info = json.load(chars)
+        self.active_character = self.character_info['active_character']
+        self.active_character_gear = self.character_info['Roster'][self.active_character]['Gear']
+        self.items_equipped = self.active_character_gear
+        
+        self.equipped_weapon.configure(text = self.items_equipped['Weapon'] + ' Weapon')
+        self.equipped_headpiece.configure(text = self.items_equipped['Headpiece'] + ' Headpiece')
+        self.equipped_chestpiece.configure(text = self.items_equipped['Chestpiece'] + ' Chestpiece')
+        self.equipped_pants.configure(text = self.items_equipped['Pants'] + ' Pants')
+        self.equipped_gloves.configure(text = self.items_equipped['Gloves'] + ' Gloves')
+        self.equipped_pauldrons.configure(text = self.items_equipped['Pauldrons'] + ' Pauldrons')
     
     #Changes displayed set info
     def switch_set_info(self, event):
-       # print(self.set_data['sets'][int(self.set_header.focus())])
-       # print(self.set_header.focus())
-       # print(self.set_data_list[int(self.set_header.focus())])
         self.set_info_index = int(self.set_header.focus())
         self.set_info_chosen_name = self.set_data_list[self.set_info_index]
         self.set_info_name.configure(text = self.set_info_chosen_name)
@@ -285,6 +380,10 @@ class SetPlanner(customtkinter.CTkFrame):
           self.equipped_pauldrons.configure(text = self.set_name + ' Pauldrons')
           self.items_equipped["Pauldrons"] = self.set_name
         self.count_gear_mats()
+        # Save changes to a character JSON file
+        self.character_info['Roster'][self.active_character]['Gear'] = self.items_equipped
+        with open("Characters.json", 'w', encoding = 'utf-8') as chars:
+          json.dump(self.character_info, chars, indent=2, ensure_ascii = False)
 
     
     # Counts how many of what materials needed for equipped items
