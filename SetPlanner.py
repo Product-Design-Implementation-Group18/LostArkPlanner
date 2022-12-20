@@ -37,6 +37,20 @@ class SetPlanner(customtkinter.CTkFrame):
         self.char_amount = len(self.char_data['Roster'])
         self.char_names = list(self.char_data['Roster'])
 
+        # Load set data from JSON file
+        self.open_sets = open('Sets.json')
+        self.set_data = json.load(self.open_sets)
+        # Make an indexable list from set names for functions
+        self.set_data_list = list(self.set_data['sets'])
+
+        # Load current character from JSON file
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.character_info = json.load(chars)
+        self.active_character = self.character_info['active_character']
+        # Load active character gear
+        self.active_character_gear = self.character_info['Roster'][self.active_character]['Gear']
+        
+
         # A dictionary of class icons that can be called later
         self.class_icons = {}
 
@@ -102,6 +116,21 @@ class SetPlanner(customtkinter.CTkFrame):
           self.char_label.grid(row = self.char_row, column = 0, pady = 20)
           self.char_label.bind('<Button-1>', self.change_character)
 
+        self.active_character_label = customtkinter.CTkLabel(
+                                                            master = self.frame_menu,
+                                                            text = "Current character:",
+                                                            text_font=("arial", 15)
+                                                            )
+        self.active_character_label.grid(row = 50, column = 0, sticky = 's', pady = (200, 0))
+        self.active_character_label_name = customtkinter.CTkLabel(
+                                                            master = self.frame_menu,
+                                                            text = self.active_character,
+                                                            text_font=("arial", 15),
+                                                            image = self.class_icons[self.char_data['Roster'][self.active_character]['Class'].lower()],
+                                                            compound = 'left',
+                                                            anchor = 'w'
+                                                            )
+        self.active_character_label_name.grid(row = 51, column = 0, sticky = 's', pady = 10)
 
 
         # Top bar, figure out better way to put it in pages prob
@@ -110,33 +139,22 @@ class SetPlanner(customtkinter.CTkFrame):
                                                         width= 120, height= 32, corner_radius = 8,
                                                         text_font=("arial", 15),
                                                         command=lambda: controller.show_frame("EngravingCalc"))
-        self.button_engragving.grid(row=1, column=1, pady=5, padx=10) 
+        self.button_engragving.grid(row=1, column=1, pady=10, padx=10) 
         self.button_tripod = customtkinter.CTkButton(master=self.frame_content,
-                                                    text="Tripod",
+                                                    text="Spellbook",
                                                     width= 120, height= 32, corner_radius = 8,
-                                                    text_font=("arial", 15))
-        self.button_tripod.grid(row=1, column=2, pady=5, padx=10)
+                                                    text_font=("arial", 15),
+                                                    command=lambda: controller.show_frame("SkillTree"))
+        self.button_tripod.grid(row=1, column=2, pady=10, padx=10)
         self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
                                                         text="Tier Set", 
                                                         width= 120, height= 32, corner_radius = 8,
                                                         text_font=("arial", 15), 
                                                         command=lambda: controller.show_frame("SetPlanner"))
-        self.button_tier_set.grid(row=1, column=3, pady=5, padx=10) 
+        self.button_tier_set.grid(row=1, column=3, pady=10, padx=10) 
 
 
-        # Load set data from JSON file
-        self.open_sets = open('Sets.json')
-        self.set_data = json.load(self.open_sets)
-        # Make an indexable list from set names for functions
-        self.set_data_list = list(self.set_data['sets'])
 
-        # Load current character from JSON file
-        with open('Characters.json', encoding = 'utf-8') as chars:
-          self.character_info = json.load(chars)
-        self.active_character = self.character_info['active_character']
-        # Load active character gear
-        self.active_character_gear = self.character_info['Roster'][self.active_character]['Gear']
-        
 
         # Dictionary for storing current equipped gear
         self.items_equipped = {
@@ -323,13 +341,17 @@ class SetPlanner(customtkinter.CTkFrame):
 
         # Count gear mats on load
         self.count_gear_mats()
-
+    
     # Function for changing character from sidebar
     def change_character(self, event):
         self.character = event.widget
         with open('Characters.json', encoding = 'utf-8') as chars:
           self.char_data = json.load(chars)
         self.char_data['active_character'] = self.character.cget("text")
+        self.active_character_label_name.configure(
+                                                  text = self.character.cget("text"),
+                                                  image = self.class_icons[self.char_data['Roster'][self.character.cget("text")]['Class'].lower()]
+                                                  )
         with open("Characters.json", 'w', encoding = 'utf-8') as chars:
           json.dump(self.char_data, chars, indent=2, ensure_ascii = False)
         self.update_gear()

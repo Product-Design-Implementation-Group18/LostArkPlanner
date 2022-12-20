@@ -37,6 +37,11 @@ class EngravingCalc(customtkinter.CTkFrame):
         self.char_amount = len(self.char_data['Roster'])
         self.char_names = list(self.char_data['Roster'])
 
+        # Load current character from JSON file
+        with open('Characters.json', encoding = 'utf-8') as chars:
+          self.character_info = json.load(chars)
+        self.active_character = self.character_info['active_character']
+
         # A dictionary of class icons that can be called later
         self.class_icons = {}
 
@@ -102,6 +107,23 @@ class EngravingCalc(customtkinter.CTkFrame):
           self.char_label.grid(row = self.char_row, column = 0, pady = 20)
           self.char_label.bind('<Button-1>', self.change_character)
 
+        self.active_character_label = customtkinter.CTkLabel(
+                                                            master = self.frame_menu,
+                                                            text = "Current character:",
+                                                            text_font=("arial", 15)
+                                                            )
+        self.active_character_label.grid(row = 50, column = 0, sticky = 's', pady = (200, 0))
+        self.active_character_label_name = customtkinter.CTkLabel(
+                                                            master = self.frame_menu,
+                                                            text = self.active_character,
+                                                            text_font=("arial", 15),
+                                                            image = self.class_icons[self.char_data['Roster'][self.active_character]['Class'].lower()],
+                                                            compound = 'left',
+                                                            anchor = 'w'
+                                                            )
+        self.active_character_label_name.grid(row = 51, column = 0, sticky = 's', pady = 10)
+
+
         
         
         # Top bar, figure out better way to put it in pages prob
@@ -115,7 +137,7 @@ class EngravingCalc(customtkinter.CTkFrame):
                                                     text="Spellbook", width= 120, height= 32, corner_radius = 8,
                                                     text_font=("arial", 15), 
                                                     command=lambda: controller.show_frame("SkillTree"))
-        self.button_tripod.grid(row=1, column=2, pady=10, padx=10)
+        self.button_tripod.grid(row=1, column=3, pady=10, padx=10)
         self.button_tier_set = customtkinter.CTkButton(master=self.frame_content,
                                                         text="Tier Set", width= 120, height= 32, corner_radius = 8,
                                                         text_font=("arial", 15), command=lambda: controller.show_frame("SetPlanner"))
@@ -257,5 +279,9 @@ class EngravingCalc(customtkinter.CTkFrame):
         with open('Characters.json', encoding = 'utf-8') as chars:
           self.char_data = json.load(chars)
         self.char_data['active_character'] = self.character.cget("text")
+        self.active_character_label_name.configure(
+                                                  text = self.character.cget("text"),
+                                                  image = self.class_icons[self.char_data['Roster'][self.character.cget("text")]['Class'].lower()]
+                                                  )
         with open("Characters.json", 'w', encoding = 'utf-8') as chars:
           json.dump(self.char_data, chars, indent=2, ensure_ascii = False)
